@@ -11,11 +11,15 @@ library(tidyverse)
 library(readxl)
 ```
 
+
+
 ## Problem 2
+
+
 ```{r}
-mr_df = read_excel("./data/202309 Trash Wheel Collection Data.xlsx", 
+mr_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx", 
                    sheet = "Mr. Trash Wheel", 
-                   range = "A2:N586", 
+                   range = "A2:N653", 
                    na = "") |> 
   janitor::clean_names() |> 
   mutate(
