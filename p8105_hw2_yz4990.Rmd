@@ -2,7 +2,7 @@
 title: "p8105_hw2_yz4990"
 author: "Yucheng Zhao"
 date: "2024-10-01"
-output: html_document
+output: md_document
 ---
 
 
