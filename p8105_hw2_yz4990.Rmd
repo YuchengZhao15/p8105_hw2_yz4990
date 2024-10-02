@@ -20,26 +20,56 @@ library(readxl)
 mr_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx", 
                    sheet = "Mr. Trash Wheel", 
                    range = "A2:N653", 
-                   na = "") |> 
+                   na = c("", "NA")) |> 
   janitor::clean_names() |> 
   mutate(
     sports_balls = as.integer(round(sports_balls, 0))
+  ) |> 
+  mutate(
+    trash_wheel_name = "mr",
+    year = as.numeric(year),
+    month = tolower(month)
+  )
+```
+
+
+```{r}
+prof_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx", 
+                   sheet = "Professor Trash Wheel", 
+                   range = "A2:M121", 
+                   na = c("", "NA")) |> 
+  janitor::clean_names() |> 
+  mutate(
+    trash_wheel_name = "professor",
+    month = tolower(month)
   )
 
+gw_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx", 
+                   sheet = "Gwynnda Trash Wheel", 
+                   range = "A2:L265", 
+                   na = c("", "NA")) |> 
+  janitor::clean_names() |> 
+  mutate(
+    trash_wheel_name = "gwynnda",
+    month = tolower(month)
+  )
 ```
 
 
 ```{r}
+trash_wheel = 
+  bind_rows(mr_df, prof_df, gw_df)
 
+total_weight_prof = filter(trash_wheel, trash_wheel_name == "professor") |> 
+  pull(weight_tons) |> 
+  sum(na.rm = TRUE)
 
+june22_cig_gw = filter(trash_wheel, trash_wheel_name == "gwynnda", year == 2022, month == "june") |> 
+  pull(cigarette_butts) |> 
+  sum(na.rm = TRUE)
 ```
 
-
-```{r}
-
-
-```
-
+The 3 dataset from "Mr. Trash Wheel," "Professor Trash Wheel," "Gwynnda Trash Wheel" each has `r nrow(mr_df)`, `r nrow(prof_df)`, and `r nrow(gw_df)` observations respectively. The combined dataset "trash_wheel" has `r nrow(trash_wheel)` observations. Its key variables include the date ("date"), weight of trash in tons ("weight_tons"), volume of trash in cubic yards ("volume_cubic_yards"), and the type of trash (including "plastic_bottles," "cigarette_butts," "glass_bottles," etc). The total weight of trash collected by Professor Trash Wheel is `r total_weight_prof` tons and the total number of cigarette butts collected by Gwynnda in June of 2022 is `r june22_cig_gw`. 
 
 ```{r}
 
