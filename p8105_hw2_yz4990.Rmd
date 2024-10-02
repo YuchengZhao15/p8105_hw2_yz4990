@@ -38,7 +38,7 @@ distinct_stations = transit_df |>
 ```
 There are `r nrow(distinct_stations)` distinct stations. 
 
-find ADA comliant stations
+find ADA compliant stations
 ```{r}
 ada_stations = transit_df |> 
   filter(ada == TRUE) |> 
@@ -198,19 +198,14 @@ Then, I rearranged the columns in the final dataset gbbo_df to make it easier to
 
 
 
-create a reader-friendly table using pivot_wider()
+create a reader-friendly table using knitr
 ```{r}
 
-winner_df <- results_df %>%
+winner_df <- gbbo_df %>%
   filter(series %in% 5:10, result %in% c("WINNER", "STAR BAKER")) |> 
-  group_by(baker, result) |> 
-  summarise(num_win = n()) |> 
-  ungroup()
+  select(series, episode, baker, result)
 
-winner_wide <- winner_df |> 
-  pivot_wider(names_from = result, values_from = num_win)
-
-winner_wide
+knitr::kable(winner_df)
 ```
 The predicable overall winner would be Richard, as he has the maximum number of being "WINNER" or "STAR BAKER." The surprisees would be the bakers who have the least number of being "WINNER" or "STAR BAKER," such as Benjamina, Chetna, and Dan. 
 
