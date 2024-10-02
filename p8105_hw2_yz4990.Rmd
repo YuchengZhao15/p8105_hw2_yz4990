@@ -99,8 +99,8 @@ results_df = read_csv("./gbb_datasets/results.csv",
 using anti_join() to check for completeness and correctness
 ```{r}
 anti_join(bakes_df, bakers_df, by = c("baker", "series"))
-anti_join(results_df, bakers_df, by = "baker", "series")
-anti_join(results_df, bakes_df, by = "baker", "series")
+anti_join(results_df, bakers_df, by = c("baker", "series"))
+anti_join(results_df, bakes_df, by = c("baker", "episode", "series"))
 ```
 
 keep only the first name of bakers in bakers_df, combine and organize the datasets, export the final dataset
@@ -114,9 +114,9 @@ gbbo_df = full_join(bakes_df, bakers_df, by = c("baker", "series")) |>
 
 write_csv(gbbo_df, "./gbb_datasets/gbbo_df")
 ```
+Describe your data cleaning process, including any questions you have or choices you made. Briefly discuss the final dataset.
 
-
-
+I first cleaned each of the 3 datasets
 ```{r}
 
 ```
