@@ -116,7 +116,11 @@ write_csv(gbbo_df, "./gbb_datasets/gbbo_df")
 ```
 Describe your data cleaning process, including any questions you have or choices you made. Briefly discuss the final dataset.
 
-I first cleaned each of the 3 datasets
+I started with reading and cleaning each of the 3 datasets. I used janitor::clean_names() function to standardize the variable names and glanced over each datasets checking for the same or different variables they have and the missing values. I found it's challenging that although all 3 datasets contained the names of the bakers ("baker" and "baker_name"), bakers_df used the full names of bakers while the other 2 datasets used only the first names. Since some bakers have the same first name, this creates problem for combining the datasets. I decided to handle this by removing the last name of bakers in bakers_df and use the remaining first name for merging the datasets. 
+
+I chose to use full_join() function to merge the datasets instead of left_join() or right_join() to include all the variables in the final dataset, ensuring no useful information is lost. I first merged bakes_df and bakers_df by the "baker" and "series" columns and then merged the new dataset with results_df by "backer," "episode," and "series." Since some bakers share the same first name, I included "series" and "episode" to ensure the columns were matched correctly. 
+
+Then, I rearranged the columns in the final dataset gbbo_df to make it easier to read and more organized. It contains `r ncol(gbbo_df)` varaibles and `r nrow(gbbo_df)` observations in total. Lastly, I saved the dataset into a csv filt in the directory using write_csv() function. 
 ```{r}
 
 ```
